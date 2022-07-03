@@ -1,3 +1,4 @@
+import { IHistory } from '../interfaces';
 import {
     REQUEST_HISTORYS,
     ADD_HISTORY,
@@ -24,10 +25,23 @@ const INITIAL_STATE = {
     countActionDelete: null,
 };
 
+interface interfaceHistoryReducer {
+    historys: IHistory[];
+    deleting: string[];
+    loading: boolean;
+    history: any;
+    countHistorysCreates: null | number;
+    countHistorysActivies: null | number;
+    countHistorysInactivies: null | number;
+    countActionCreate: null | number;
+    countActionUpdate: null | number;
+    countActionDelete: null | number;
+}
+
 export default function HistoryReducer(
     state = INITIAL_STATE,
     action: { type: string; payload: any },
-) {
+): interfaceHistoryReducer {
     switch (action.type) {
         case LOADING_HISTORY:
             return {
