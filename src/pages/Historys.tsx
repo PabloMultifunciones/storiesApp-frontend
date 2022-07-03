@@ -190,7 +190,10 @@ function Historys(props: any) {
                             </GridAddHistory>
                         ))}
                         <GridAddHistory item xs={12} sm={6} md={4}>
-                            <AddHistory onClick={() => handleOpenAdd()}>
+                            <AddHistory
+                                data-testid='btn-add-history'
+                                onClick={() => handleOpenAdd()}
+                            >
                                 <ControlPoint sx={{ fontSize: 100 }} />
                             </AddHistory>
                             <HistoryModal
