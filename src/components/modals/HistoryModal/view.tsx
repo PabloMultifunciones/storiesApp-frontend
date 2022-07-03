@@ -28,9 +28,11 @@ const Label = styled(Grid)`
 function View(props?: PropsView) {
     const [loading, setLoading] = useState(true);
 
-    if (loading) {
-        props?.getHistoryRequest(props?.id);
-    }
+    useEffect(() => {
+        if (loading) {
+            props?.getHistoryRequest(props?.id);
+        }
+    });
 
     useEffect(() => {
         setLoading(false);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, TextField, Button, Typography } from '@mui/material';
 import ClipLoader from 'react-spinners/ClipLoader';
 import toastr from 'toastr';
@@ -45,10 +45,12 @@ function Edit(props?: PropsEdit) {
     const [errorTitle, setErrorTitle] = useState(false);
     const [errorDescription, setErrorDescription] = useState(false);
 
-    if (loading && props?.loading === false) {
-        props?.getHistoryRequest(props?.id);
-        setLoading(false);
-    }
+    useEffect(() => {
+        if (loading && props?.loading === false) {
+            props?.getHistoryRequest(props?.id);
+            setLoading(false);
+        }
+    }, [loading, props]);
 
     const submitForm = async () => {
         let errorTitle = false;
