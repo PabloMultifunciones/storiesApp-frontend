@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Bar } from 'react-chartjs-2';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Chart, registerables } from 'chart.js';
 import { getActions } from '../../actions/historyActions';
 
-Chart.register(...registerables);
-
 function ActionsLastDay(props?: any) {
     const [countActionCreate, setCountActionCreate] = useState(null);
     const [countActionUpdate, setCountActionUpdate] = useState(null);
     const [countActionDelete, setCountActionDelete] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (registerables !== undefined) {
+            Chart.register(...registerables);
+        }
+    });
 
     if (
         props?.countActionCreate !== null &&
@@ -80,7 +84,11 @@ function ActionsLastDay(props?: any) {
             {loading ? (
                 <ClipLoader color='blue' size={120} />
             ) : (
-                <Bar data={state} options={options} />
+                <Bar
+                    data={state}
+                    options={options}
+                    data-testid='chart-actions-last-day'
+                />
             )}
         </>
     );

@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Line } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { countCreateHistorysRequest } from '../../actions/historyActions';
-
-Chart.register(...registerables);
 
 interface dateProps {
     dateName: String;
@@ -17,6 +15,13 @@ function HistorysCreates(props: any) {
     const [countHistorysCreates, setCountHistorysCreates] = useState<
         Array<Number>
     >([]);
+
+    useEffect(() => {
+        if (registerables !== undefined) {
+            Chart.register(...registerables);
+        }
+    });
+
     if (props?.countHistorysCreates === null) {
         props.countCreateHistorysRequest();
     }
@@ -61,7 +66,11 @@ function HistorysCreates(props: any) {
             {labels.length === 0 ? (
                 <ClipLoader color='blue' size={120} />
             ) : (
-                <Line data={data} options={options} />
+                <Line
+                    data={data}
+                    options={options}
+                    data-testid='chart-historys-creates'
+                />
             )}
         </>
     );

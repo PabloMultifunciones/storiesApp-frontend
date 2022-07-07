@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Pie } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { getHistorysAI } from '../../actions/historyActions';
 
-Chart.register(...registerables);
-
 function HistorysActivies(props: any) {
     const [historysActivies, setHistorysActivies] = useState(null);
     const [historysInactivies, setHistorysInactivies] = useState(null);
+
+    useEffect(() => {
+        if (registerables !== undefined) {
+            Chart.register(...registerables);
+        }
+    });
 
     if (
         props?.countHistorysActivies === null &&
@@ -41,7 +45,7 @@ function HistorysActivies(props: any) {
             {historysActivies === null && historysInactivies === null ? (
                 <ClipLoader color='blue' size={120} />
             ) : (
-                <Pie data={data} />
+                <Pie data={data} data-testid='chart-history-activies' />
             )}
         </>
     );

@@ -8,16 +8,14 @@ import {
     saveHistoryRequest,
     deleteHistoryRequest,
 } from '../actions/historyActions';
-import Actions from '../components/charts/actionslastday';
-import Users from '../components/charts/historysactivies';
+import ActionsLastDay from '../components/charts/actionslastday';
+import HistorysActivies from '../components/charts/historysactivies';
 import HistorysCreates from '../components/charts/historyscreates';
 import Scrollbar from '../components/scrollbar';
 import '../styles/pages/HistorysStyles.scss';
 import { ContentCenter } from '../styles/styled';
 
 import 'toastr/build/toastr.min.css';
-
-Chart.register(...registerables);
 
 const ContainerHistorys = styled(Box)`
     width: 100%;
@@ -29,6 +27,9 @@ const ChartContainer = styled(Grid)`
 
 function Charts(props: any) {
     useEffect(() => {
+        if (registerables !== undefined) {
+            Chart.register(...registerables);
+        }
         props.historysRequest();
     });
 
@@ -40,12 +41,12 @@ function Charts(props: any) {
                     <Grid container sx={{ paddingLeft: '5px' }}>
                         <ChartContainer item xs={8}>
                             <ContentCenter>
-                                <Actions />
+                                <ActionsLastDay />
                             </ContentCenter>
                         </ChartContainer>
                         <ChartContainer item xs={4}>
                             <ContentCenter>
-                                <Users />
+                                <HistorysActivies />
                             </ContentCenter>
                         </ChartContainer>
                         <ChartContainer item xs={12}>
