@@ -39,7 +39,7 @@ export default function Scrollbar(props: { page: string }) {
     return (
         <Grid container item xs={2} style={styleEjem}>
             <Grid item xs={12}>
-                <Link to='/' style={{ textDecoration: 'none' }}>
+                <Link to='/historys' style={{ textDecoration: 'none' }}>
                     <ItemMenu selected={props.page === 'historys'}>
                         <HistoryIcon />
                         <OptionName>Historias</OptionName>

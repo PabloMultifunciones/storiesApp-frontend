@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import styled from 'styled-components';
+import Cookies from 'universal-cookie';
+import UserModal from './modals/UserModal';
 
 const Container = styled.div`
     background-color: #1c72e7;
@@ -35,13 +37,30 @@ const Options = styled.div`
 `;
 
 export default function Navbar() {
+    const [username, setUsername] = useState('');
+    const [isOpenModal, setIsOpenModal] = useState(false);
+
+    const openModal = () => {
+        setIsOpenModal(true);
+    };
+
+    const closeModal = () => {
+        setIsOpenModal(false);
+    };
+
+    useEffect(() => {
+        const cookie = new Cookies();
+        const username = cookie.get('Username');
+        setUsername(username);
+    }, []);
+
     return (
         <Container>
             <Options>
                 <Username>
-                    <Typography>Usuario Nombre</Typography>
+                    <Typography>{username}</Typography>
                 </Username>
-                <PefilIcon>
+                <PefilIcon onClick={openModal}>
                     <AccountCircle
                         sx={{
                             fontSize: '60px',
@@ -52,6 +71,7 @@ export default function Navbar() {
                     />
                 </PefilIcon>
             </Options>
+            <UserModal op={isOpenModal} handleClose={closeModal} />
         </Container>
     );
 }

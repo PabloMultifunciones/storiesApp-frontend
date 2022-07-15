@@ -1,0 +1,33 @@
+.btn-danger {
+  background-color: #f34d32 !important;
+  width: 50%;
+  color: white !important;
+  border-radius: 0 0 0 4px !important;
+}
+
+.btn-danger:hover {
+  background-color: #ff4729 !important;
+}
+
+.btn-view {
+  background-color: #1c72e7 !important;
+  width: 50%;
+  color: white !important;
+  border-radius: 0 0 4px 0 !important;
+}
+
+.btn-view:hover {
+  background-color: #2682ff !important;
+}
+
+.btn-edit {
+  background-color: #3FFF56 !important;
+  color: white !important;
+  border-radius: 0 0 4px 0 !important;
+  margin-left: auto !important;
+}
+
+.btn-edit:hover {
+  background-color: #2682ff !important;
+}
+/*# sourceMappingURL=HistorysStyles.css.map */

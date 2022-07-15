@@ -1,3 +1,4 @@
+import Cookies from 'universal-cookie';
 import { IHistory, IResponse } from '../interfaces';
 import {
     REQUEST_HISTORYS,
@@ -24,7 +25,11 @@ import {
 
 export const historysRequest = () => async (dispatch: any) => {
     try {
-        const RESPONSE = await getHistorys();
+        const cookies = new Cookies();
+        const token = await cookies.get('Token');
+        const headers = { authorization: token };
+
+        const RESPONSE = await getHistorys(headers);
 
         dispatch({
             type: REQUEST_HISTORYS,
@@ -40,7 +45,11 @@ export const historysRequest = () => async (dispatch: any) => {
 export const saveHistoryRequest =
     (payload: IHistory) => async (dispatch: any) => {
         try {
-            const RESPONSE: IResponse = await saveHistory(payload);
+            const cookies = new Cookies();
+            const token = await cookies.get('Token');
+            const headers = { authorization: token };
+
+            const RESPONSE: IResponse = await saveHistory(headers, payload);
 
             if (RESPONSE.data.error) {
                 return 'FAILED';
@@ -60,16 +69,20 @@ export const saveHistoryRequest =
 export const deleteHistoryRequest =
     (id: string) => async (dispatch: any, getState: any) => {
         try {
-            dispatch({
-                type: DELETING_HISTORY,
-                payload: id,
-            });
+            const cookies = new Cookies();
+            const token = await cookies.get('Token');
+            const headers = { authorization: token };
 
-            const RESPONSE: IResponse = await deleteHistory(id);
+            const RESPONSE: IResponse = await deleteHistory(headers, id);
 
             if (RESPONSE.data.error) {
                 return 'FAILED';
             }
+
+            dispatch({
+                type: DELETING_HISTORY,
+                payload: id,
+            });
 
             const HISTORYS = getState().historyReducer.historys;
             const HISTORYS_UPDATED = HISTORYS.filter(
@@ -89,11 +102,15 @@ export const deleteHistoryRequest =
 
 export const getHistoryRequest = (id: string) => async (dispatch: any) => {
     try {
+        const cookies = new Cookies();
+        const token = await cookies.get('Token');
+        const headers = { authorization: token };
+
         dispatch({
             type: LOADING_HISTORY,
         });
 
-        const RESPONSE: IResponse = await getHistory(id);
+        const RESPONSE: IResponse = await getHistory(headers, id);
 
         if (RESPONSE.data.error) {
             return 'FAILED';
@@ -113,11 +130,19 @@ export const getHistoryRequest = (id: string) => async (dispatch: any) => {
 export const updateHistoryRequest =
     (id: string, history: IHistory) => async (dispatch: any) => {
         try {
+            const cookies = new Cookies();
+            const token = await cookies.get('Token');
+            const headers = { authorization: token };
+
             dispatch({
                 type: LOADING_HISTORY,
             });
 
-            const RESPONSE: IResponse = await updateHistory(id, history);
+            const RESPONSE: IResponse = await updateHistory(
+                headers,
+                id,
+                history,
+            );
 
             if (RESPONSE.data.error) {
                 return 'FAILED';
@@ -135,7 +160,11 @@ export const updateHistoryRequest =
 
 export const countCreateHistorysRequest = () => async (dispatch: any) => {
     try {
-        const RESPONSE = await getCountHistorysCreates();
+        const cookies = new Cookies();
+        const token = await cookies.get('Token');
+        const headers = { authorization: token };
+
+        const RESPONSE = await getCountHistorysCreates(headers);
 
         dispatch({
             type: SAVE_COUNT_HISTORYS_CREATES,
@@ -150,7 +179,11 @@ export const countCreateHistorysRequest = () => async (dispatch: any) => {
 
 export const getHistorysAI = () => async (dispatch: any) => {
     try {
-        const RESPONSE = await getHistorysAactiviesInactives();
+        const cookies = new Cookies();
+        const token = await cookies.get('Token');
+        const headers = { authorization: token };
+
+        const RESPONSE = await getHistorysAactiviesInactives(headers);
 
         dispatch({
             type: SAVE_COUNT_HISTORYS_A_I,
@@ -165,7 +198,11 @@ export const getHistorysAI = () => async (dispatch: any) => {
 
 export const getActions = () => async (dispatch: any) => {
     try {
-        const RESPONSE = await getActionsLastDay();
+        const cookies = new Cookies();
+        const token = await cookies.get('Token');
+        const headers = { authorization: token };
+
+        const RESPONSE = await getActionsLastDay(headers);
 
         dispatch({
             type: SAVE_COUNT_ACTIONS_LAST_DAY,
