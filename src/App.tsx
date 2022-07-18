@@ -6,6 +6,7 @@ import Historys from './pages/Historys';
 import Charts from './pages/Charts';
 import Login from './pages/Login';
 import Navbar from './components/navbar';
+import { initUser } from './actions/userActions';
 
 function App(props?: any) {
     const [isLogged, setIsLogged] = useState(false);
@@ -13,7 +14,10 @@ function App(props?: any) {
     useEffect(() => {
         async function fetchData() {
             const cookies = new Cookies();
+            const username: string = await cookies.get('Username');
             const token: string = await cookies.get('Token');
+
+            props?.initUser({ username, token });
             setIsLogged(token !== undefined);
         }
         fetchData();
@@ -44,6 +48,8 @@ function App(props?: any) {
     );
 }
 
+const mapDispatchToProps = { initUser };
+
 const mapStateToProps = (props: any) => props.loginReducer;
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

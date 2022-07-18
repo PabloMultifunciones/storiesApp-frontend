@@ -6,3 +6,11 @@ export const loginUser = (data: any) =>
         url: `${process.env.REACT_APP_API_URL}/users/login`,
         data,
     });
+
+export const setNewPassword = (headers: { authorization: string }, data: any) =>
+    axios({
+        method: `PUT`,
+        url: `${process.env.REACT_APP_API_URL}/users/changePassword/${data.username}`,
+        data,
+        headers,
+    });
